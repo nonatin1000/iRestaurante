@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./modelos/modelo.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:x="http://xpert.com/faces" 
+                xmlns:xc="http://java.sun.com/jsf/composite/xpert/components"
+                >
+    <ui:define name="content">
+        <p:panel header="Restaurantes">
+            <h:form prependId="false" id="formConsultaRestaurante">
+                <p:messages/>
+                <p:commandButton value="Cadastrar" onclick="dialogCadastro.show()"/>
+                <p:dataTable
+                    value="#{restauranteController.restaurantes}"
+                    var="rest"
+                    paginator="true"
+                    rows="10"
+                    paginatorPosition="bottom"
+                    emptyMessage="Nenhum restaurante encontrado.">
+                    <p:column headerText="Nome">
+                        #{rest.nome}
+                    </p:column>
+                    <p:column headerText="CNPJ">
+                        <p:inputMask readonly="true"
+                                     mask="99.999.999/9999-99"
+                                     value="#{rest.cnpj}"
+                                     />
+                    </p:column>
+                    <p:column headerText="Tefelone">
+                        #{rest.phone1}
+                    </p:column>
+                    <p:column headerText="Gerente">
+                        #{rest.gerente.nome}
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <p:commandButton value="Áreas" oncomplete="dialogAreas.show()" 
+                                         update=":formCadastroArea"
+                                         action="#{restauranteController.carregarAreas()}" >
+                            <f:setPropertyActionListener 
+                                target="#{restauranteController.restaurante}"
+                                value="#{rest}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Manutenção de Áreas"
+                  widgetVar="dialogAreas">
+            <h:form id="formCadastroArea">
+                <p:dataTable value="#{restauranteController.restaurante.areas}" 
+                             rows="5" paginator="true"
+                             var="area">
+                    <p:column headerText="Áreas do Restaurante">
+                        #{area.nome}
+                    </p:column>
+                </p:dataTable>
+                <p:dataTable  value="#{areaController.areas}" rows="5" paginator="true"
+                              emptyMessage="Sem áreas disponíveis"
+                             var="areaD">
+                    <p:column headerText="Áreas disponíveis">
+                        #{areaD.nome}
+                    </p:column>
+                    <p:column headerText="Ação">
+                        <p:commandButton value="Selecionar" 
+                                         action="#{restauranteController.adicionarArea(areaD)}" 
+                                         process="@form"
+                                         update="@form"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+        <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Manutenção de Restaurante"
+                  widgetVar="dialogCadastro">
+            <h:form prependId="false" id="formCadatroRestaurante">
+                <p:messages/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Nome: " />
+                    <p:inputText value="#{restauranteController.restaurante.nome}" />
+                    <h:outputLabel value="CNPJ: " />
+                    <p:inputMask mask="99.999.999/9999-99" 
+                                 value="#{restauranteController.restaurante.cnpj}" />
+                    <h:outputLabel value="Telefone: " />
+                    <p:inputMask mask="(99) 9999-999?99" 
+                                 value="#{restauranteController.restaurante.phone1}" />
+                    <h:outputLabel value="Gerente: " />
+                    <h:selectOneMenu value="#{restauranteController.restaurante.gerente}" 
+                                     converter="entityConverter">
+                        <f:selectItem itemLabel="Selecione um gerente"
+                                      noSelectionOption="true" />
+                        <f:selectItems value="#{gerenteController.gerentes}"
+                                       var="gere" itemLabel="#{gere.nome}"
+                                       itemValue="#{gere}" />
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <p:commandButton value="Salvar"
+                                 process="@form"
+                                 update="@form :formConsultaRestaurante"
+                                 action="#{restauranteController.salvar()}"/>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

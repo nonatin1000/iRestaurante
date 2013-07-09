@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./modelos/modelo.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:x="http://xpert.com/faces" 
+                xmlns:xc="http://java.sun.com/jsf/composite/xpert/components">
+    <ui:define name="content">
+        <p:panel header="Areas">
+            <h:form prependId="false" id="formConsultaArea">
+                <p:messages />
+                <p:commandButton value="Cadastrar" onclick="dialogCadastro.show()"/>
+                <p:dataTable
+                    value="#{areaController.areas}"
+                    var="area"
+                    paginator="true"
+                    rows="10"
+                    paginatorPosition="bottom"
+                    emptyMessage="Nenhuma área encontrado.">
+                    <p:column headerText="Nome">
+                        #{area.nome}
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Manutenção de Area"
+                  widgetVar="dialogCadastro">
+            <h:form prependId="false" id="formCadatroArea">
+                <p:messages/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Nome: " />
+                    <p:inputText value="#{areaController.area.nome}" required="true"
+                                 requiredMessage="Nome é um campo obrigatório"/>
+                    <h:outputLabel value="Descrição: " />
+                    <h:inputTextarea value="#{areaController.area.descricao}"
+                                     rows="5"
+                                     cols="15"/>
+                </h:panelGrid>
+                <p:commandButton value="Salvar"
+                                 process="@form"
+                                 update="@form :formConsultaArea"
+                                 action="#{areaController.salvar()}"/>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

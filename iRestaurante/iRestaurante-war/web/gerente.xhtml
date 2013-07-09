@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./modelos/modelo.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:x="http://xpert.com/faces" 
+                xmlns:xc="http://java.sun.com/jsf/composite/xpert/components">
+    <ui:define name="content">
+        <p:panel header="Gerentes">
+            <h:form prependId="false" id="formConsultaGerente">
+                <p:messages />
+                <p:commandButton value="Cadastrar" onclick="dialogCadastro.show()"/>
+                <p:dataTable
+                    value="#{gerenteController.gerentes}"
+                    var="gere"
+                    paginator="true"
+                    rows="10"
+                    paginatorPosition="bottom"
+                    emptyMessage="Nenhum gerente encontrado.">
+                    <p:column headerText="Nome">
+                        #{gere.nome}
+                    </p:column>
+                    <p:column headerText="CPF">
+                        #{gere.cpf}
+                    </p:column>
+                    <p:column headerText="Tefelone">
+                        #{gere.telefone}
+                    </p:column>
+                    <p:column headerText="Salário" >
+                        #{gere.salario}
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Manutenção de Gerente"
+                  widgetVar="dialogCadastro">
+            <h:form prependId="false" id="formCadatroGerente">
+                <p:messages/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Nome: " />
+                    <p:inputText value="#{gerenteController.gerente.nome}" required="true"
+                                 requiredMessage="Nome é um campo obrigatório"/>
+                    <h:outputLabel value="Matrícula: " />
+                    <p:inputMask mask="aa999-99" 
+                                 value="#{gerenteController.gerente.matricula}" />
+                    <h:outputLabel value="CPF: " />
+                    <p:inputMask mask="999.999.999-99" 
+                                 value="#{gerenteController.gerente.cpf}" />
+                    <h:outputLabel value="Telefone: " />
+                    <p:inputMask mask="(99) 9999-999?99" 
+                                 value="#{gerenteController.gerente.telefone}" />
+                    <h:outputLabel value="Salário: " />
+                    <xc:inputNumber value="#{gerenteController.gerente.salario}"
+                                    limit="7" />
+                </h:panelGrid>
+                <p:commandButton value="Salvar"
+                                 process="@form"
+                                 update="@form :formConsultaGerente"
+                                 action="#{gerenteController.salvar()}"/>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>
