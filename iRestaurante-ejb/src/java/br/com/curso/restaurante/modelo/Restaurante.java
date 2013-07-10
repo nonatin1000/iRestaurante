@@ -19,7 +19,7 @@ import javax.persistence.SequenceGenerator;
 
 /**
  *
- * @author dimmyk
+ * @author nonato
  */
 @Entity
 public class Restaurante implements Serializable {

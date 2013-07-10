@@ -4,8 +4,7 @@
  */
 package br.com.curso.restaurante.dao.impl;
 
-import br.com.curso.restaurante.dao.AreaDAO;
-import br.com.curso.restaurante.modelo.Area;
+import br.com.curso.restaurante.dao.GarcomDAO;
 import javax.ejb.Stateless;
 
 /**
@@ -13,7 +12,6 @@ import javax.ejb.Stateless;
  * @author nonato
  */
 @Stateless
-public class AreaDAOImpl
-        extends BaseDAOImpl<Area>
-        implements AreaDAO {
+public class GorcomDAOImpl extends BaseDAOImpl<GarcomDAO> {
+    
 }

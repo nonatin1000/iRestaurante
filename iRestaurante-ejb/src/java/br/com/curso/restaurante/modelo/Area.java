@@ -16,7 +16,7 @@ import javax.persistence.SequenceGenerator;
 
 /**
  *
- * @author dimmyk
+ * @author nonato
  */
 @Entity
 public class Area implements Serializable {

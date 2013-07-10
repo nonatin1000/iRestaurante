@@ -15,7 +15,7 @@ import javax.validation.ValidationException;
 
 /**
  *
- * @author dimmyk
+ * @author nonato
  */
 @Stateless
 public class RestauranteBO {

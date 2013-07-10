@@ -4,7 +4,7 @@
  */
 package br.com.curso.restaurante.bo;
 
-import br.com.curso.restaurante.dao.AreaDAO;
+import br.com.curso.restaurante.dao.GarcomDAO;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -13,12 +13,13 @@ import javax.ejb.Stateless;
  * @author nonato
  */
 @Stateless
-public class AreaBO {
-
+public class GarcomBO {
+    
     @EJB
-    private AreaDAO areaDAO;
+    private GarcomDAO garcomDAO;
 
-    public AreaDAO getAreaDAO() {
-        return areaDAO;
+    public GarcomDAO getGarcomDAO() {
+        return garcomDAO;
     }
+        
 }

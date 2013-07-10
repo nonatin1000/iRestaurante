@@ -10,7 +10,7 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author dimmyk
+ * @author nonato
  */
 @Stateless
 public class RestauranteDAOImpl 

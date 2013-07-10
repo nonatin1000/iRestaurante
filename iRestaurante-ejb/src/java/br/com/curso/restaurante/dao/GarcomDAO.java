@@ -4,7 +4,7 @@
  */
 package br.com.curso.restaurante.dao;
 
-import br.com.curso.restaurante.modelo.Gerente;
+import br.com.curso.restaurante.modelo.Garcom;
 import javax.ejb.Local;
 
 /**
@@ -12,6 +12,6 @@ import javax.ejb.Local;
  * @author nonato
  */
 @Local
-public interface GerenteDAO
-        extends BaseDAO<Gerente> {
+public interface GarcomDAO extends BaseDAO<Garcom> {
+    
 }

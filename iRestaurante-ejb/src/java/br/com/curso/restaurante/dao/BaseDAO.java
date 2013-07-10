@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  *
- * @author dimmyk
+ * @author nonato
  */
 public interface BaseDAO<T> {
 

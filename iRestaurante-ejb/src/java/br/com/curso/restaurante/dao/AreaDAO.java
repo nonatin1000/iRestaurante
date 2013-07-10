@@ -9,7 +9,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author dimmyk
+ * @author nonato
  */
 @Local
 public interface AreaDAO

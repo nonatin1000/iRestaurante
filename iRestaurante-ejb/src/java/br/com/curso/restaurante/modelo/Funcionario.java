@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 
 /**
  *
- * @author dimmyk
+ * @author nonato
  */
 @Entity
 public class Funcionario extends Pessoa {

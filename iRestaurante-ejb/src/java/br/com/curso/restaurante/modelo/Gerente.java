@@ -11,7 +11,7 @@ import javax.persistence.Temporal;
 
 /**
  *
- * @author dimmyk
+ * @author nonato
  */
 @Entity
 public class Gerente extends Funcionario {

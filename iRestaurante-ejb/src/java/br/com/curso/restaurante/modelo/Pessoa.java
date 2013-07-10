@@ -17,7 +17,7 @@ import javax.persistence.Temporal;
 
 /**
  *
- * @author dimmyk
+ * @author nonato
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

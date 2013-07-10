@@ -13,7 +13,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author dimmyk
+ * @author nonato
  */
 public class BaseDAOImpl<T> implements BaseDAO<T> {
 
