@@ -22,7 +22,7 @@ import javax.faces.context.FacesContext;
 
 /**
  *
- * @author dimmyk
+ * @author nonato
  */
 @ManagedBean
 @ViewScoped

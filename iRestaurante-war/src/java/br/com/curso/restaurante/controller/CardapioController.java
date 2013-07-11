@@ -4,8 +4,8 @@
  */
 package br.com.curso.restaurante.controller;
 
-import br.com.curso.restaurante.bo.GerenteBO;
-import br.com.curso.restaurante.modelo.Gerente;
+import br.com.curso.restaurante.bo.CardapioBO;
+import br.com.curso.restaurante.modelo.Cardapio;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,60 +22,69 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class GerenteController {
-
-    private Gerente gerente;
-    private List<Gerente> gerentes;
+public class CardapioController {
+    
+    private Cardapio cardapio;
+    private List<Cardapio> cardapios;
     @EJB
-    private GerenteBO gerenteBO;
-
+    private CardapioBO cardapioBO;
+    
     @PostConstruct
     public void init() {
-        gerente = new Gerente();
-        gerentes = gerenteBO
-                .getGerenteDAO()
+        cardapio = new Cardapio();
+        cardapios = cardapioBO
+                .getCardapioDAO()
                 .recuperarTodos();
     }
 
     public void salvar() {
         try {
-            gerente = gerenteBO.getGerenteDAO().salvar(gerente);
-            if (gerente != null) {
+            cardapio = cardapioBO.getCardapioDAO().salvar(cardapio);
+            if (cardapio != null) {
                 FacesContext.getCurrentInstance()
                         .addMessage(null,
                         new FacesMessage(
                         FacesMessage.SEVERITY_INFO,
-                        "Gerente cadastrado",
-                        "Gerente cadastrado"));
+                        "Cardapio cadastrado",
+                        "Cardapio cadastrado"));
             }
         } catch (Exception ex) {
             Logger.getLogger(
-                    GerenteController.class.getName())
+                    CardapioController.class.getName())
                     .log(Level.SEVERE, null, ex);
             FacesContext.getCurrentInstance()
                     .addMessage(null,
                     new FacesMessage(
                     FacesMessage.SEVERITY_ERROR,
-                    "Gerente não cadastrado",
-                    "Gerente não cadastrado"));
+                    "Cardapio não cadastrado",
+                    "Cardapio não cadastrado"));
             return;
         }
         init();
     }
 
-    public Gerente getGerente() {
-        return gerente;
+    public Cardapio getCardapio() {
+        return cardapio;
     }
 
-    public void setGerente(Gerente gerente) {
-        this.gerente = gerente;
+    public void setCardapio(Cardapio cardapio) {
+        this.cardapio = cardapio;
     }
 
-    public List<Gerente> getGerentes() {
-        return gerentes;
+    public List<Cardapio> getCardapios() {
+        return cardapios;
     }
 
-    public void setGerentes(List<Gerente> gerentes) {
-        this.gerentes = gerentes;
+    public void setCardapios(List<Cardapio> cardapios) {
+        this.cardapios = cardapios;
     }
+
+    public CardapioBO getCardapioBO() {
+        return cardapioBO;
+    }
+
+    public void setCardapioBO(CardapioBO cardapioBO) {
+        this.cardapioBO = cardapioBO;
+    }
+    
 }

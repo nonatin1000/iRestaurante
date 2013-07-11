@@ -23,7 +23,7 @@ import javax.persistence.SequenceGenerator;
  */
 @Entity
 public class Restaurante implements Serializable {
-
+    
     @Id
     @SequenceGenerator(allocationSize = 1,
     initialValue = 1,
@@ -40,8 +40,16 @@ public class Restaurante implements Serializable {
     private String cnpj;
     private String phone1;
     private String phone2;
+    
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Cardapio cardapio;
+    
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Gerente gerente;
+    
+    @OneToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    private Garcom garcom;
+    
     @ManyToMany(fetch= FetchType.LAZY)
     private List<Area> areas;
 
@@ -109,6 +117,22 @@ public class Restaurante implements Serializable {
         this.ID = ID;
     }
 
+    public Cardapio getCardapio() {
+        return cardapio;
+    }
+
+    public void setCardapio(Cardapio cardapio) {
+        this.cardapio = cardapio;
+    }
+
+    public Garcom getGarcom() {
+        return garcom;
+    }
+
+    public void setGarcom(Garcom garcom) {
+        this.garcom = garcom;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

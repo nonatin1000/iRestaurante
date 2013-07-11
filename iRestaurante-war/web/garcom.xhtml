@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./modelos/modelo.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:x="http://xpert.com/faces" 
+                xmlns:xc="http://java.sun.com/jsf/composite/xpert/components">
+    <ui:define name="content">
+        <p:panel header="Garcom">
+            <h:form prependId="false" id="formConsultaGarcom">
+                <p:messages />
+                <p:commandButton value="Cadastrar" onclick="dialogCadastro.show()"/>
+                <p:dataTable
+                    value="#{garcomController.garcoms}"
+                    var="gar"
+                    paginator="true"
+                    rows="10"
+                    paginatorPosition="bottom"
+                    emptyMessage="Nenhum garcom encontrado.">
+                    <p:column headerText="Nome">
+                        #{gar.nome}
+                    </p:column>
+                    <p:column headerText="CPF">
+                        #{gar.cpf}
+                    </p:column>
+                    <p:column headerText="Tefelone">
+                        #{gar.telefone}
+                    </p:column>
+                    <p:column headerText="Salário" >
+                        #{gar.salario}
+                    </p:column>
+                    <p:column headerText="Comissão" >
+                        #{gar.comissao}
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Manutenção de Garcom"
+                  widgetVar="dialogCadastro">
+            <h:form prependId="false" id="formCadatroGarcom">
+                <p:messages/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Nome: " />
+                    <p:inputText value="#{garcomController.garcom.nome}" required="true"
+                                 requiredMessage="Nome é um campo obrigatório"/>
+                    <h:outputLabel value="Matrícula: " />
+                    <p:inputMask mask="aa999-99" 
+                                 value="#{garcomController.garcom.matricula}" />
+                    <h:outputLabel value="CPF: " />
+                    <p:inputMask mask="999.999.999-99" 
+                                 value="#{garcomController.garcom.cpf}" />
+                    <h:outputLabel value="Telefone: " />
+                    <p:inputMask mask="(99) 9999-999?99" 
+                                 value="#{garcomController.garcom.telefone}" />
+                    <h:outputLabel value="Salario " />
+                    <xc:inputNumber value="#{garcomController.garcom.salario}"
+                                    limit="7" />
+                    <h:outputLabel value="Comissão " />
+                    <xc:inputNumber value="#{garcomController.garcom.comissao}"
+                                    limit="7" />
+                </h:panelGrid>
+                <p:commandButton value="Salvar"
+                                 process="@form"
+                                 update="@form :formConsultaGarcom"
+                                 action="#{garcomController.salvar()}"/>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

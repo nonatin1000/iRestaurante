@@ -4,8 +4,8 @@
  */
 package br.com.curso.restaurante.dao.impl;
 
-import br.com.curso.restaurante.dao.GarcomDAO;
-import br.com.curso.restaurante.modelo.Garcom;
+import br.com.curso.restaurante.dao.CardapioDAO;
+import br.com.curso.restaurante.modelo.Cardapio;
 import javax.ejb.Stateless;
 
 /**
@@ -13,6 +13,6 @@ import javax.ejb.Stateless;
  * @author nonato
  */
 @Stateless
-public class GorcomDAOImpl extends BaseDAOImpl<Garcom> implements GarcomDAO{
+public class CardapioDAOImpl extends BaseDAOImpl<Cardapio> implements CardapioDAO{
     
 }

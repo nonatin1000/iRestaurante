@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./modelos/modelo.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:x="http://xpert.com/faces" 
+                xmlns:xc="http://java.sun.com/jsf/composite/xpert/components"
+                >
+    <ui:define name="content">
+        <p:panel header="ItemCardapios">
+            <h:form prependId="false" id="formConsultaItemCardapio">
+                <p:messages/>
+                <p:commandButton value="Cadastrar" onclick="dialogCadastro.show()"/>
+                <p:dataTable
+                    value="#{itemCardapioController.itemCardapios}"
+                    var="rest"
+                    paginator="true"
+                    rows="10"
+                    paginatorPosition="bottom"
+                    emptyMessage="Nenhum itemCardapio encontrado.">
+                    <p:column headerText="Nome">
+                        #{card.prato}
+                    </p:column>
+                    <p:column headerText="CNPJ">
+                        <p:inputMask readonly="true"
+                                     mask="99.999.999/9999-99"
+                                     value="#{card.cnpj}"
+                                     />
+                    </p:column>
+                    <p:column headerText="Tefelone">
+                        #{card.phone1}
+                    </p:column>
+                    <p:column headerText="Gerente">
+                        #{card.gerente.nome}
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <p:commandButton value="Áreas" oncomplete="dialogAreas.show()" 
+                                         update=":formCadastroArea"
+                                         action="#{itemCardapioController.carregarAreas()}" >
+                            <f:setPropertyActionListener 
+                                target="#{itemCardapioController.itemCardapio}"
+                                value="#{card}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Manutenção de Áreas"
+                  widgetVar="dialogAreas">
+            <h:form id="formCadastroArea">
+                <p:dataTable value="#{itemCardapioController.itemCardapio.cardapio}" 
+                             rows="5" paginator="true"
+                             var="card">
+                    <p:column headerText="Áreas do ItemCardapio">
+                        #{card.nome}
+                    </p:column>
+                </p:dataTable>
+                <p:dataTable  value="#{areaController.areas}" rows="5" paginator="true"
+                              emptyMessage="Sem áreas disponíveis"
+                             var="areaD">
+                    <p:column headerText="Áreas disponíveis">
+                        #{areaD.nome}
+                    </p:column>
+                    <p:column headerText="Ação">
+                        <p:commandButton value="Selecionar" 
+                                         action="#{itemCardapioController.adicionarArea(areaD)}" 
+                                         process="@form"
+                                         update="@form"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+        <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Manutenção de ItemCardapio"
+                  widgetVar="dialogCadastro">
+            <h:form prependId="false" id="formCadatroItemCardapio">
+                <p:messages/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Nome: " />
+                    <p:inputText value="#{itemCardapioController.itemCardapio.nome}" />
+                    <h:outputLabel value="CNPJ: " />
+                    <p:inputMask mask="99.999.999/9999-99" 
+                                 value="#{itemCardapioController.itemCardapio.cnpj}" />
+                    <h:outputLabel value="Telefone: " />
+                    <p:inputMask mask="(99) 9999-999?99" 
+                                 value="#{itemCardapioController.itemCardapio.phone1}" />
+                    <h:outputLabel value="Gerente: " />
+                    <h:selectOneMenu value="#{itemCardapioController.itemCardapio.gerente}" 
+                                     converter="entityConverter">
+                        <f:selectItem itemLabel="Selecione um gerente"
+                                      noSelectionOption="true" />
+                        <f:selectItems value="#{cardapioController.cardapios}"
+                                       var="gere" itemLabel="#{card.prato}"
+                                       itemValue="#{card}" />
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <p:commandButton value="Salvar"
+                                 process="@form"
+                                 update="@form :formConsultaItemCardapio"
+                                 action="#{itemCardapioController.salvar()}"/>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>
