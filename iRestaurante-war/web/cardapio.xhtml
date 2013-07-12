@@ -18,9 +18,6 @@
                     rows="10"
                     paginatorPosition="bottom"
                     emptyMessage="Nenhum cardapio encontrado.">
-                    <p:column headerText="Prato">
-                        #{card.prato}
-                    </p:column>
                     <p:column headerText="Descricao">
                         #{card.descricao}
                     </p:column>
@@ -34,11 +31,8 @@
             <h:form prependId="false" id="formCadatroCardapio">
                 <p:messages/>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="Prato " />
-                    <p:inputText value="#{cardapioController.cardapio.prato}" required="true"
-                                 requiredMessage="Nome é um campo obrigatório"/>
                     <h:outputLabel value="Descrição " />
-                    <p:inputTextarea value="#{cardapioController.cardapio.descricao}" />
+                    <p:inputText value="#{cardapioController.cardapio.descricao}" />
                 </h:panelGrid>
                 <p:commandButton value="Salvar"
                                  process="@form"

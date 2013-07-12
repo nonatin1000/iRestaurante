@@ -8,9 +8,11 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -26,12 +28,10 @@ public class Cardapio implements Serializable {
     @SequenceGenerator(allocationSize=1, initialValue=1, name="card", sequenceName="card_id_seq")
     @GeneratedValue(generator="card", strategy= GenerationType.SEQUENCE)
     private Long id;
-    @Column(length = 200)
-    private String prato;
     @Column(length = 500)
     private String descricao;
     
-    @OneToMany(mappedBy = "cardapio")
+    @ManyToMany(mappedBy = "cardapio")
     private List<ItemCardapio> itemCardapios;
     
     @OneToOne(mappedBy = "cardapio")
@@ -43,14 +43,6 @@ public class Cardapio implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getPrato() {
-        return prato;
-    }
-
-    public void setPrato(String prato) {
-        this.prato = prato;
     }
 
     public String getDescricao() {
@@ -76,13 +68,14 @@ public class Cardapio implements Serializable {
     public void setItemCardapios(List<ItemCardapio> itemCardapios) {
         this.itemCardapios = itemCardapios;
     }
-    
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 59 * hash + (this.prato != null ? this.prato.hashCode() : 0);
-        hash = 59 * hash + (this.restaurante != null ? this.restaurante.hashCode() : 0);
+        int hash = 5;
+        hash = 13 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 13 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
+        hash = 13 * hash + (this.itemCardapios != null ? this.itemCardapios.hashCode() : 0);
+        hash = 13 * hash + (this.restaurante != null ? this.restaurante.hashCode() : 0);
         return hash;
     }
 

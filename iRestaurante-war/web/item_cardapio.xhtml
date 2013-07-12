@@ -15,65 +15,23 @@
                 <p:commandButton value="Cadastrar" onclick="dialogCadastro.show()"/>
                 <p:dataTable
                     value="#{itemCardapioController.itemCardapios}"
-                    var="rest"
+                    var="itemCard"
                     paginator="true"
                     rows="10"
                     paginatorPosition="bottom"
                     emptyMessage="Nenhum itemCardapio encontrado.">
-                    <p:column headerText="Nome">
-                        #{card.prato}
+                    <p:column headerText="Prato">
+                        #{itemCard.prato}
                     </p:column>
-                    <p:column headerText="CNPJ">
-                        <p:inputMask readonly="true"
-                                     mask="99.999.999/9999-99"
-                                     value="#{card.cnpj}"
-                                     />
+                    <p:column headerText="Descrição">
+                        #{itemCard.descricao}
                     </p:column>
-                    <p:column headerText="Tefelone">
-                        #{card.phone1}
-                    </p:column>
-                    <p:column headerText="Gerente">
-                        #{card.gerente.nome}
-                    </p:column>
-                    <p:column headerText="Ações">
-                        <p:commandButton value="Áreas" oncomplete="dialogAreas.show()" 
-                                         update=":formCadastroArea"
-                                         action="#{itemCardapioController.carregarAreas()}" >
-                            <f:setPropertyActionListener 
-                                target="#{itemCardapioController.itemCardapio}"
-                                value="#{card}" />
-                        </p:commandButton>
+                    <p:column headerText="Cardapio">
+                        #{itemCard.cardapio}
                     </p:column>
                 </p:dataTable>
             </h:form>
         </p:panel>
-        <p:dialog modal="true" resizable="false"
-                  width="400"
-                  header="Manutenção de Áreas"
-                  widgetVar="dialogAreas">
-            <h:form id="formCadastroArea">
-                <p:dataTable value="#{itemCardapioController.itemCardapio.cardapio}" 
-                             rows="5" paginator="true"
-                             var="card">
-                    <p:column headerText="Áreas do ItemCardapio">
-                        #{card.nome}
-                    </p:column>
-                </p:dataTable>
-                <p:dataTable  value="#{areaController.areas}" rows="5" paginator="true"
-                              emptyMessage="Sem áreas disponíveis"
-                             var="areaD">
-                    <p:column headerText="Áreas disponíveis">
-                        #{areaD.nome}
-                    </p:column>
-                    <p:column headerText="Ação">
-                        <p:commandButton value="Selecionar" 
-                                         action="#{itemCardapioController.adicionarArea(areaD)}" 
-                                         process="@form"
-                                         update="@form"/>
-                    </p:column>
-                </p:dataTable>
-            </h:form>
-        </p:dialog>
         <p:dialog modal="true" resizable="false"
                   width="400"
                   header="Manutenção de ItemCardapio"
@@ -81,23 +39,19 @@
             <h:form prependId="false" id="formCadatroItemCardapio">
                 <p:messages/>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="Nome: " />
-                    <p:inputText value="#{itemCardapioController.itemCardapio.nome}" />
-                    <h:outputLabel value="CNPJ: " />
-                    <p:inputMask mask="99.999.999/9999-99" 
-                                 value="#{itemCardapioController.itemCardapio.cnpj}" />
-                    <h:outputLabel value="Telefone: " />
-                    <p:inputMask mask="(99) 9999-999?99" 
-                                 value="#{itemCardapioController.itemCardapio.phone1}" />
-                    <h:outputLabel value="Gerente: " />
-                    <h:selectOneMenu value="#{itemCardapioController.itemCardapio.gerente}" 
+                    <h:outputLabel value="Cardapio: " />
+                    <h:selectOneMenu value="#{itemCardapioController.itemCardapio.cardapio}" 
                                      converter="entityConverter">
-                        <f:selectItem itemLabel="Selecione um gerente"
+                        <f:selectItem itemLabel="Selecione um Cardapio"
                                       noSelectionOption="true" />
                         <f:selectItems value="#{cardapioController.cardapios}"
-                                       var="gere" itemLabel="#{card.prato}"
+                                       var="card" itemLabel="#{card.descricao}"
                                        itemValue="#{card}" />
                     </h:selectOneMenu>
+                    <h:outputLabel value="Nome: " />
+                    <p:inputText value="#{itemCardapioController.itemCardapio.prato}" />
+                     <h:outputLabel value="Descrição " />
+                     <p:inputTextarea value="#{itemCardapioController.itemCardapio.descricao}" />
                 </h:panelGrid>
                 <p:commandButton value="Salvar"
                                  process="@form"

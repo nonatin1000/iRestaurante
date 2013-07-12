@@ -5,13 +5,15 @@
 package br.com.curso.restaurante.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -24,19 +26,19 @@ public class ItemCardapio implements Serializable {
     @SequenceGenerator(name = "itemCard", allocationSize = 1, sequenceName = "itemCard_seq_id")
     @GeneratedValue(generator = "itemCard", strategy = GenerationType.SEQUENCE)
     @Column
-    private String nome;
+    private String prato;
     @Column
     private String descricao;
     
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private Cardapio cardapio;
+    @ManyToMany(fetch= FetchType.LAZY)
+    private List<Cardapio> cardapios;
 
-    public String getNome() {
-        return nome;
+    public String getPrato() {
+        return prato;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setPrato(String prato) {
+        this.prato = prato;
     }
 
     public String getDescricao() {
@@ -47,12 +49,32 @@ public class ItemCardapio implements Serializable {
         this.descricao = descricao;
     }
 
-    public Cardapio getCardapio() {
-        return cardapio;
+    public List<Cardapio> getCardapios() {
+        return cardapios;
     }
 
-    public void setCardapio(Cardapio cardapio) {
-        this.cardapio = cardapio;
+    public void setCardapios(List<Cardapio> cardapios) {
+        this.cardapios = cardapios;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + (this.prato != null ? this.prato.hashCode() : 0);
+        hash = 59 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ItemCardapio other = (ItemCardapio) obj;
+        return true;
     }
     
 }

@@ -39,6 +39,7 @@ public class ItemCardapioController {
 
     public void salvar() {
         try {
+            itemCardapio.getCardapio().setItemCardapios(itemCardapios);
             itemCardapio = itemCardapioBO.getItemCardapioDAO().salvar(itemCardapio);
             if (itemCardapio != null) {
                 FacesContext.getCurrentInstance()
@@ -50,7 +51,7 @@ public class ItemCardapioController {
             }
         } catch (Exception ex) {
             Logger.getLogger(
-                    AreaController.class.getName())
+                    ItemCardapioController.class.getName())
                     .log(Level.SEVERE, null, ex);
             FacesContext.getCurrentInstance()
                     .addMessage(null,

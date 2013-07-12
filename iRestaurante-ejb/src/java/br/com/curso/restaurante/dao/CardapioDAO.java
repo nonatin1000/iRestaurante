@@ -5,11 +5,13 @@
 package br.com.curso.restaurante.dao;
 
 import br.com.curso.restaurante.modelo.Cardapio;
+import javax.ejb.Local;
 
 /**
  *
  * @author nonato
  */
+@Local
 public interface CardapioDAO extends BaseDAO<Cardapio> {
     
 }
