@@ -23,7 +23,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 public class ItemCardapioController {
-    
+   
     private ItemCardapio itemCardapio;
     private List<ItemCardapio> itemCardapios;
     @EJB
@@ -39,26 +39,25 @@ public class ItemCardapioController {
 
     public void salvar() {
         try {
-            itemCardapio.getCardapio().setItemCardapios(itemCardapios);
             itemCardapio = itemCardapioBO.getItemCardapioDAO().salvar(itemCardapio);
             if (itemCardapio != null) {
                 FacesContext.getCurrentInstance()
                         .addMessage(null,
                         new FacesMessage(
                         FacesMessage.SEVERITY_INFO,
-                        "ItemCardapio cadastrado",
-                        "ItemCardapio cadastrado"));
+                        "itemCardapio cadastrado",
+                        "itemCardapio cadastrado"));
             }
         } catch (Exception ex) {
             Logger.getLogger(
-                    ItemCardapioController.class.getName())
+                    AreaController.class.getName())
                     .log(Level.SEVERE, null, ex);
             FacesContext.getCurrentInstance()
                     .addMessage(null,
                     new FacesMessage(
                     FacesMessage.SEVERITY_ERROR,
-                    "ItemCardapio não cadastrado",
-                    "ItemCardapio não cadastrado"));
+                    "itemCardapio não cadastrado",
+                    "itemCardapio não cadastrado"));
             return;
         }
         init();
@@ -87,5 +86,4 @@ public class ItemCardapioController {
     public void setItemCardapioBO(ItemCardapioBO itemCardapioBO) {
         this.itemCardapioBO = itemCardapioBO;
     }
-    
 }

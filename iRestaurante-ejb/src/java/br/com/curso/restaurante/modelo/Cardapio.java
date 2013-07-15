@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -68,13 +67,12 @@ public class Cardapio implements Serializable {
     public void setItemCardapios(List<ItemCardapio> itemCardapios) {
         this.itemCardapios = itemCardapios;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 13 * hash + (this.id != null ? this.id.hashCode() : 0);
         hash = 13 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
-        hash = 13 * hash + (this.itemCardapios != null ? this.itemCardapios.hashCode() : 0);
         hash = 13 * hash + (this.restaurante != null ? this.restaurante.hashCode() : 0);
         return hash;
     }

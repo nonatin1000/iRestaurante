@@ -14,7 +14,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class ItemCardapioBO {
-   
+    
     @EJB
     private ItemCardapioDAO itemCardapioDAO;
 

@@ -4,9 +4,7 @@
  */
 package br.com.curso.restaurante.modelo;
 
-import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,7 +19,7 @@ import javax.persistence.SequenceGenerator;
  * @author nonato
  */
 @Entity
-public class ItemCardapio implements Serializable {
+public class ItemCardapio {
     @Id
     @SequenceGenerator(name = "itemCard", allocationSize = 1, sequenceName = "itemCard_seq_id")
     @GeneratedValue(generator = "itemCard", strategy = GenerationType.SEQUENCE)
@@ -30,7 +28,7 @@ public class ItemCardapio implements Serializable {
     @Column
     private String descricao;
     
-    @ManyToMany(fetch= FetchType.LAZY)
+    @ManyToMany(mappedBy = "itemCardapio", fetch= FetchType.LAZY)
     private List<Cardapio> cardapios;
 
     public String getPrato() {
@@ -59,9 +57,10 @@ public class ItemCardapio implements Serializable {
     
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + (this.prato != null ? this.prato.hashCode() : 0);
-        hash = 59 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
+        int hash = 5;
+        hash = 89 * hash + (this.prato != null ? this.prato.hashCode() : 0);
+        hash = 89 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
+        hash = 89 * hash + (this.cardapios != null ? this.cardapios.hashCode() : 0);
         return hash;
     }
 
