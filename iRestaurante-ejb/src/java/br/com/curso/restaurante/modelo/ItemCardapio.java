@@ -24,13 +24,22 @@ public class ItemCardapio {
     @Id
     @SequenceGenerator(name = "itemCard", allocationSize = 1, sequenceName = "itemCard_seq_id")
     @GeneratedValue(generator = "itemCard", strategy = GenerationType.SEQUENCE)
+    private Long id;
     @Column
     private String prato;
     @Column
     private String descricao;
     
-    @ManyToMany(fetch= FetchType.LAZY)
+    @ManyToMany(mappedBy = "itemCardapios")
     private List<Cardapio> cardapios;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getPrato() {
         return prato;
@@ -55,13 +64,14 @@ public class ItemCardapio {
     public void setCardapios(List<Cardapio> cardapios) {
         this.cardapios = cardapios;
     }
-    
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + (this.prato != null ? this.prato.hashCode() : 0);
-        hash = 89 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
-        hash = 89 * hash + (this.cardapios != null ? this.cardapios.hashCode() : 0);
+        int hash = 7;
+        hash = 31 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 31 * hash + (this.prato != null ? this.prato.hashCode() : 0);
+        hash = 31 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
+        hash = 31 * hash + (this.cardapios != null ? this.cardapios.hashCode() : 0);
         return hash;
     }
 
@@ -76,5 +86,4 @@ public class ItemCardapio {
         final ItemCardapio other = (ItemCardapio) obj;
         return true;
     }
-    
 }

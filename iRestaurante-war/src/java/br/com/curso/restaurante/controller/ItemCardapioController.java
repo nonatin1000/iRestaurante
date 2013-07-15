@@ -50,7 +50,7 @@ public class ItemCardapioController {
             }
         } catch (Exception ex) {
             Logger.getLogger(
-                    AreaController.class.getName())
+                    ItemCardapioController.class.getName())
                     .log(Level.SEVERE, null, ex);
             FacesContext.getCurrentInstance()
                     .addMessage(null,

@@ -6,6 +6,8 @@ package br.com.curso.restaurante.controller;
 
 import br.com.curso.restaurante.bo.CardapioBO;
 import br.com.curso.restaurante.modelo.Cardapio;
+import br.com.curso.restaurante.modelo.ItemCardapio;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -21,7 +23,7 @@ import javax.faces.context.FacesContext;
  * @author nonato
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class CardapioController {
     
     private Cardapio cardapio;
@@ -35,6 +37,18 @@ public class CardapioController {
         cardapios = cardapioBO
                 .getCardapioDAO()
                 .recuperarTodos();
+    }
+    
+    public void carregarItemCardapio() {
+        cardapio = cardapioBO.inicializarRelacoes(cardapio);
+    }
+
+    public void adicionarItemCardapio(ItemCardapio itemCardapio) {
+        if (cardapio.getItemCardapios() == null) {
+            cardapio.setItemCardapios(new ArrayList<ItemCardapio>());
+        }
+        cardapio.getItemCardapios().add(itemCardapio);
+        cardapio = cardapioBO.getCardapioDAO().salvar(cardapio);
     }
 
     public void salvar() {

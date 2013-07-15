@@ -30,7 +30,7 @@ public class Cardapio implements Serializable {
     @Column(length = 500)
     private String descricao;
     
-    @ManyToMany(mappedBy = "cardapios")
+    @ManyToMany(fetch= FetchType.LAZY)
     private List<ItemCardapio> itemCardapios;
     
     @OneToOne(mappedBy = "cardapio")

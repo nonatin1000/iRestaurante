@@ -6,28 +6,24 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:x="http://xpert.com/faces" 
-                xmlns:xc="http://java.sun.com/jsf/composite/xpert/components"
-                >
+                xmlns:xc="http://java.sun.com/jsf/composite/xpert/components">
     <ui:define name="content">
         <p:panel header="ItemCardapios">
             <h:form prependId="false" id="formConsultaItemCardapio">
-                <p:messages/>
+                <p:messages />
                 <p:commandButton value="Cadastrar" onclick="dialogCadastro.show()"/>
                 <p:dataTable
                     value="#{itemCardapioController.itemCardapios}"
-                    var="itemCard"
+                    var="itemCardapio"
                     paginator="true"
                     rows="10"
                     paginatorPosition="bottom"
-                    emptyMessage="Nenhum itemCardapio encontrado.">
+                    emptyMessage="Nenhuma área encontrado.">
                     <p:column headerText="Prato">
-                        #{itemCard.prato}
+                        #{itemCardapio.prato}
                     </p:column>
                     <p:column headerText="Descrição">
-                        #{itemCard.descricao}
-                    </p:column>
-                    <p:column headerText="Cardapio">
-                        #{itemCard.cardapio}
+                        #{itemCardapio.descricao}
                     </p:column>
                 </p:dataTable>
             </h:form>
@@ -39,19 +35,13 @@
             <h:form prependId="false" id="formCadatroItemCardapio">
                 <p:messages/>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="Cardapio: " />
-                    <h:selectOneMenu value="#{itemCardapioController.itemCardapio.cardapio}" 
-                                     converter="entityConverter">
-                        <f:selectItem itemLabel="Selecione um Cardapio"
-                                      noSelectionOption="true" />
-                        <f:selectItems value="#{cardapioController.cardapios}"
-                                       var="card" itemLabel="#{card.descricao}"
-                                       itemValue="#{card}" />
-                    </h:selectOneMenu>
-                    <h:outputLabel value="Nome: " />
-                    <p:inputText value="#{itemCardapioController.itemCardapio.prato}" />
-                     <h:outputLabel value="Descrição " />
-                     <p:inputTextarea value="#{itemCardapioController.itemCardapio.descricao}" />
+                    <h:outputLabel value="Prato " />
+                    <p:inputText value="#{itemCardapioController.itemCardapio.prato}" required="true"
+                                 requiredMessage="O nome do prato é um campo obrigatório"/>
+                    <h:outputLabel value="Descrição: " />
+                    <h:inputTextarea value="#{itemCardapioController.itemCardapio.descricao}"
+                                     rows="5"
+                                     cols="15"/>
                 </h:panelGrid>
                 <p:commandButton value="Salvar"
                                  process="@form"
@@ -60,4 +50,5 @@
             </h:form>
         </p:dialog>
     </ui:define>
+
 </ui:composition>
