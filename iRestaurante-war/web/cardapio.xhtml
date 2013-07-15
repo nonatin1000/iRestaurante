@@ -4,12 +4,14 @@
                 template="./modelos/modelo.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:x="http://xpert.com/faces" 
-                xmlns:xc="http://java.sun.com/jsf/composite/xpert/components">
+                xmlns:xc="http://java.sun.com/jsf/composite/xpert/components"
+                >
     <ui:define name="content">
         <p:panel header="Cardapios">
             <h:form prependId="false" id="formConsultaCardapio">
-                <p:messages />
+                <p:messages/>
                 <p:commandButton value="Cadastrar" onclick="dialogCadastro.show()"/>
                 <p:dataTable
                     value="#{cardapioController.cardapios}"
@@ -18,12 +20,48 @@
                     rows="10"
                     paginatorPosition="bottom"
                     emptyMessage="Nenhum cardapio encontrado.">
-                    <p:column headerText="Descricao">
+                    <p:column headerText="Descrição">
                         #{card.descricao}
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <p:commandButton value="ItemCardapio" oncomplete="dialogItemCardapios.show()" 
+                                         update=":formCadastroItemCardapio"
+                                         action="#{cardapioController.carregarItemCardapio()}" >
+                            <f:setPropertyActionListener 
+                                target="#{cardapioController.cardapio}"
+                                value="#{card}" />
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
             </h:form>
         </p:panel>
+        <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Manutenção de Item Car"
+                  widgetVar="dialogItemCardapios">
+            <h:form id="formCadastroItemCardapio">
+                <p:dataTable value="#{cardapioController.cardapio.itemCardapios}" 
+                             rows="5" paginator="true"
+                             var="itemCad">
+                    <p:column headerText="Itens do Cardapio">
+                        #{itemCad.prato}
+                    </p:column>
+                </p:dataTable>
+                <p:dataTable  value="#{itemCardapioController.itemCardapios}" rows="5" paginator="true"
+                              emptyMessage="Sem itens do cardapios disponíveis"
+                             var="itemCardDisp">
+                    <p:column headerText="itens do cardapios disponíveis">
+                        #{itemCardDisp.prato}
+                    </p:column>
+                    <p:column headerText="Ação">
+                        <p:commandButton value="Selecionar" 
+                                         action="#{cardapioController.adicionarItemCardapio(itemCardDisp)}" 
+                                         process="@form"
+                                         update="@form"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
         <p:dialog modal="true" resizable="false"
                   width="400"
                   header="Manutenção de Cardapio"
@@ -31,7 +69,7 @@
             <h:form prependId="false" id="formCadatroCardapio">
                 <p:messages/>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="Descrição " />
+                    <h:outputLabel value="Descrição: " />
                     <p:inputText value="#{cardapioController.cardapio.descricao}" />
                 </h:panelGrid>
                 <p:commandButton value="Salvar"
@@ -41,5 +79,4 @@
             </h:form>
         </p:dialog>
     </ui:define>
-
 </ui:composition>
