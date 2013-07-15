@@ -5,6 +5,7 @@
 package br.com.curso.restaurante.modelo;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +29,7 @@ public class ItemCardapio {
     @Column
     private String descricao;
     
-    @ManyToMany(mappedBy = "itemCardapio", fetch= FetchType.LAZY)
+    @ManyToMany(fetch= FetchType.LAZY)
     private List<Cardapio> cardapios;
 
     public String getPrato() {
