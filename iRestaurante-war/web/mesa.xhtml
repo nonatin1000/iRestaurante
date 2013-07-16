@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./modelos/modelo.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:x="http://xpert.com/faces" 
+                xmlns:xc="http://java.sun.com/jsf/composite/xpert/components">
+    <ui:define name="content">
+        <p:panel header="Mesas">
+            <h:form prependId="false" id="formConsultaMesa">
+                <p:messages />
+                <p:commandButton value="Cadastrar" onclick="dialogCadastro.show()"/>
+                <p:dataTable
+                    value="#{mesaController.mesas}"
+                    var="mesa"
+                    paginator="true"
+                    rows="10"
+                    paginatorPosition="bottom"
+                    emptyMessage="Nenhuma mesa encontrado.">
+                    <p:column headerText="Descrição">
+                        #{mesa.descricao}
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Manutenção de Mesa"
+                  widgetVar="dialogCadastro">
+            <h:form prependId="false" id="formCadatroMesa">
+                <p:messages/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Descrição: " />
+                    <p:inputText value="#{mesaController.mesa.descricao}" required="true"
+                                 requiredMessage="A descrição é um campo obrigatório"/>
+                </h:panelGrid>
+                <p:commandButton value="Salvar"
+                                 process="@form"
+                                 update="@form :formConsultaMesa"
+                                 action="#{mesaController.salvar()}"/>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>
