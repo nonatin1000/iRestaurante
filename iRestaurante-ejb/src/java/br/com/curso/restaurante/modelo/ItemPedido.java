@@ -5,6 +5,7 @@
 package br.com.curso.restaurante.modelo;
 
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -20,6 +22,7 @@ import javax.persistence.SequenceGenerator;
  */
 @Entity
 public class ItemPedido {
+    
     @Id
     @SequenceGenerator(name = "itemPed", allocationSize = 1, sequenceName = "itemPed_seq_id")
     @GeneratedValue(generator = "itemPed", strategy = GenerationType.SEQUENCE)
@@ -31,7 +34,10 @@ public class ItemPedido {
     
     @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
     private ItemCardapio itemCardapio;
-
+    
+    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    private Pedido pedido;
+    
     public Long getId() {
         return id;
     }
@@ -64,6 +70,14 @@ public class ItemPedido {
         this.itemCardapio = itemCardapio;
     }
 
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 3;

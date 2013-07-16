@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./modelos/modelo.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:x="http://xpert.com/faces" 
+                xmlns:xc="http://java.sun.com/jsf/composite/xpert/components">
+    <ui:define name="content">
+        <p:panel header="Pedidos">
+            <h:form prependId="false" id="formConsultaPedido">
+                <p:messages />
+                <p:commandButton value="Cadastrar" onclick="dialogCadastro.show()"/>
+                <p:dataTable
+                    value="#{pedidoController.pedidos}"
+                    var="ped"
+                    paginator="true"
+                    rows="10"
+                    paginatorPosition="bottom"
+                    emptyMessage="Nenhuma pedido encontrado.">
+                    <p:column headerText="N.º Pedido">
+                        #{ped.id}
+                    </p:column>
+                    <p:column headerText="Data Pedido">
+                        #{ped.dataPedido}
+                    </p:column>
+                    <p:column headerText="Mesa">
+                        #{ped.mesa.descricao}
+                    </p:column>
+                    <p:column headerText="Garcom">
+                        #{ped.garcom.nome}
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+        <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Manutenção de Pedido"
+                  widgetVar="dialogCadastro">
+            <h:form prependId="false" id="formCadatroPedido">
+                <p:messages/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Garçom: " />
+                    <h:selectOneMenu value="#{pedidoController.pedido.garcom}" 
+                                     converter="entityConverter">
+                        <f:selectItem itemLabel="Selecione um garcom"
+                                      noSelectionOption="true" />
+                        <f:selectItems value="#{garcomController.garcoms}"
+                                       var="garc" itemLabel="#{garc.nome}"
+                                       itemValue="#{garc}" />
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Mesa: " />
+                    <h:selectOneMenu value="#{pedidoController.pedido.mesa}" 
+                                     converter="entityConverter">
+                        <f:selectItem itemLabel="Selecione uma mesa"
+                                      noSelectionOption="true" />
+                        <f:selectItems value="#{mesaController.mesas}"
+                                       var="mes" itemLabel="#{mes.descricao}"
+                                       itemValue="#{mes}" />
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Total: " />
+                    <p:inputText value="#{pedidoController.pedido.total}" required="true"
+                                 requiredMessage="o Valor é um campo obrigatório" />
+                </h:panelGrid>
+                <p:commandButton value="Salvar"
+                                 process="@form"
+                                 update="@form :formConsultaPedido"
+                                 action="#{pedidoController.salvar()}"/>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

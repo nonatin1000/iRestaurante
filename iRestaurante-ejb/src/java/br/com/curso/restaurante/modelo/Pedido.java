@@ -34,9 +34,6 @@ public class Pedido {
     private BigDecimal total;
     
     @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
-    private ItemPedido itemPedido;
-    
-    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
     private Mesa mesa;
     
     @OneToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
@@ -66,14 +63,6 @@ public class Pedido {
         this.total = total;
     }
 
-    public ItemPedido getItemPedido() {
-        return itemPedido;
-    }
-
-    public void setItemPedido(ItemPedido itemPedido) {
-        this.itemPedido = itemPedido;
-    }
-
     public Garcom getGarcom() {
         return garcom;
     }
@@ -89,5 +78,4 @@ public class Pedido {
     public void setMesa(Mesa mesa) {
         this.mesa = mesa;
     }
-    
 }

@@ -63,4 +63,28 @@ public class PedidoController {
         }
         init();
     }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public PedidoBO getPedidoBO() {
+        return pedidoBO;
+    }
+
+    public void setPedidoBO(PedidoBO pedidoBO) {
+        this.pedidoBO = pedidoBO;
+    }
 }
