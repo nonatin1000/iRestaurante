@@ -48,11 +48,11 @@
                   header="Manutenção de Item do Pedido"
                   widgetVar="dialogItemCardapio">
             <h:form id="formCadastroItemCardapio">
-                <p:dataTable value="#{itemCardapioController.itemCardapios}" 
+                <p:dataTable value="#{itemPedidoController.itemPedidos}" 
                              rows="5" paginator="true"
                              var="item">
                     <p:column headerText="Item do Pedido">
-                        #{item.prato}
+                        #{item.itemCardapio.prato}
                     </p:column>
                 </p:dataTable>
                 <p:dataTable  value="#{itemCardapioController.itemCardapios}" rows="5" paginator="true"
