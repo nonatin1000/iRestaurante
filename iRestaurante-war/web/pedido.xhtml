@@ -31,9 +31,45 @@
                     <p:column headerText="Garcom">
                         #{ped.garcom.nome}
                     </p:column>
+                    <p:column headerText="Ações">
+                        <p:commandButton value="Item do Pedido" oncomplete="dialogItemCardapio.show()" 
+                                         update=":formCadastroItemCardapio"
+                                         action="#{itemPedidoController.carregarItemCardapio()}" >
+                            <f:setPropertyActionListener 
+                                target="#{itemPedidoController.itemPedido}"
+                                value="#{item}" />
+                        </p:commandButton>
+                    </p:column>
                 </p:dataTable>
             </h:form>
         </p:panel>
+        <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Manutenção de Item do Pedido"
+                  widgetVar="dialogItemCardapio">
+            <h:form id="formCadastroItemCardapio">
+                <p:dataTable value="#{itemCardapioController.itemCardapios}" 
+                             rows="5" paginator="true"
+                             var="item">
+                    <p:column headerText="Item do Pedido">
+                        #{item.prato}
+                    </p:column>
+                </p:dataTable>
+                <p:dataTable  value="#{itemCardapioController.itemCardapios}" rows="5" paginator="true"
+                              emptyMessage="Sem ItemCardapios disponíveis"
+                             var="itemDisp">
+                    <p:column headerText="ItemCardapios disponíveis">
+                        #{itemDisp.prato}
+                    </p:column>
+                    <p:column headerText="Ação">
+                        <p:commandButton value="Selecionar" 
+                                         action="#{itemPedidoController.adicionarItemCardapio(itemDisp)}" 
+                                         process="@form"
+                                         update="@form"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
         <p:dialog modal="true" resizable="false"
                   width="400"
                   header="Manutenção de Pedido"

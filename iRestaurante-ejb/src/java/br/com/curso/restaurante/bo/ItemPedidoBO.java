@@ -5,6 +5,9 @@
 package br.com.curso.restaurante.bo;
 
 import br.com.curso.restaurante.dao.ItemPedidoDAO;
+import br.com.curso.restaurante.modelo.ItemCardapio;
+import br.com.curso.restaurante.modelo.ItemPedido;
+import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 

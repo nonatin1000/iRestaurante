@@ -5,6 +5,7 @@
 package br.com.curso.restaurante.modelo;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -61,7 +62,7 @@ public class ItemPedido {
     public void setQuantidade(long quantidade) {
         this.quantidade = quantidade;
     }
-
+    
     public ItemCardapio getItemCardapio() {
         return itemCardapio;
     }
@@ -69,7 +70,7 @@ public class ItemPedido {
     public void setItemCardapio(ItemCardapio itemCardapio) {
         this.itemCardapio = itemCardapio;
     }
-
+    
     public Pedido getPedido() {
         return pedido;
     }
@@ -77,14 +78,13 @@ public class ItemPedido {
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 71 * hash + (this.id != null ? this.id.hashCode() : 0);
         hash = 71 * hash + (this.valor != null ? this.valor.hashCode() : 0);
         hash = 71 * hash + (int) (this.quantidade ^ (this.quantidade >>> 32));
-        hash = 71 * hash + (this.itemCardapio != null ? this.itemCardapio.hashCode() : 0);
         return hash;
     }
 
@@ -99,5 +99,5 @@ public class ItemPedido {
         final ItemPedido other = (ItemPedido) obj;
         return true;
     }
-    
+
 }

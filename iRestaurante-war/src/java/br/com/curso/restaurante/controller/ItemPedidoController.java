@@ -5,7 +5,9 @@
 package br.com.curso.restaurante.controller;
 
 import br.com.curso.restaurante.bo.ItemPedidoBO;
+import br.com.curso.restaurante.modelo.ItemCardapio;
 import br.com.curso.restaurante.modelo.ItemPedido;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +37,18 @@ public class ItemPedidoController {
                 .getItemPedidoDAO()
                 .recuperarTodos();
     }
+    /*
+    public void carregarItemCardapio() {
+        itemPedido = itemPedidoBO.inicializarRelacoes(itemPedido);
+    }
+
+    public void adicionarItemCardapio(ItemPedido itemCardapio) {
+        if (itemPedido.getItemCardapios() == null) {
+            itemPedido.setItemCardapios(new ArrayList<ItemCardapio>());
+        }
+        itemPedido.getItemCardapios().add(itemCardapio);
+        itemPedido = itemPedidoBO.getItemPedidoDAO().salvar(itemPedido);
+    }*/
 
     public void salvar() {
         try {
