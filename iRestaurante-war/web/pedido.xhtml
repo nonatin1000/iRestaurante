@@ -62,6 +62,10 @@
                     <h:outputLabel value="Total: " />
                     <p:inputText value="#{pedidoController.pedido.total}" required="true"
                                  requiredMessage="o Valor é um campo obrigatório" />
+                    
+                    <h:outputLabel value="Data: " />
+                    <p:calendar value="#{pedidoController.pedido.dataPedido}" effect="explode" required="true"
+                                 requiredMessage="A data é um campo obrigatório" />
                 </h:panelGrid>
                 <p:commandButton value="Salvar"
                                  process="@form"
