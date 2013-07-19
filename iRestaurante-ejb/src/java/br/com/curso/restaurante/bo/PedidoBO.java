@@ -5,7 +5,9 @@
 package br.com.curso.restaurante.bo;
 
 import br.com.curso.restaurante.dao.PedidoDAO;
+import br.com.curso.restaurante.modelo.ItemPedido;
 import br.com.curso.restaurante.modelo.Pedido;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -36,5 +38,14 @@ public class PedidoBO {
                 .recuperarPorCampo("id", pedido.getId());
         
         return pedidoDAO.salvar(pedido);
+    }
+    
+    public Pedido inicializarRelacoes(Pedido pedido){
+        pedido = pedidoDAO.recuperarPorId(pedido.getId());
+        if(pedido.getItemPedidos() == null){
+            pedido.setItemPedidos(new ArrayList<ItemPedido>());
+        }
+        int i = pedido.getItemPedidos() !=  null ? pedido.getItemPedidos().size() : 0;
+        return pedido;
     }
 }

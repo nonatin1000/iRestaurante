@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,14 +30,14 @@ public class ItemPedido {
     @GeneratedValue(generator = "itemPed", strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column
-    private BigDecimal valor;
+    private BigDecimal valorTotal;
     @Column
     private long quantidade;
     
-    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch= FetchType.EAGER, cascade={CascadeType.MERGE, CascadeType.PERSIST})
     private ItemCardapio itemCardapio;
     
-    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch= FetchType.EAGER, cascade={CascadeType.MERGE, CascadeType.PERSIST})
     private Pedido pedido;
     
     public Long getId() {
@@ -47,12 +48,12 @@ public class ItemPedido {
         this.id = id;
     }
 
-    public BigDecimal getValor() {
-        return valor;
+    public BigDecimal getValorTotal() {
+        return valorTotal;
     }
 
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
     public long getQuantidade() {
@@ -83,7 +84,6 @@ public class ItemPedido {
     public int hashCode() {
         int hash = 3;
         hash = 71 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 71 * hash + (this.valor != null ? this.valor.hashCode() : 0);
         hash = 71 * hash + (int) (this.quantidade ^ (this.quantidade >>> 32));
         return hash;
     }

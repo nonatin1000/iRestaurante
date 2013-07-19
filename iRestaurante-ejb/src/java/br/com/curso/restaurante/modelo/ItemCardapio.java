@@ -4,6 +4,7 @@
  */
 package br.com.curso.restaurante.modelo;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,6 +30,8 @@ public class ItemCardapio {
     private String prato;
     @Column
     private String descricao;
+    @Column
+    private BigDecimal preco;
     
     @ManyToMany(mappedBy = "itemCardapios")
     private List<Cardapio> cardapios;
@@ -65,6 +68,14 @@ public class ItemCardapio {
         this.cardapios = cardapios;
     }
 
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

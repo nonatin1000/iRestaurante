@@ -25,6 +25,9 @@
                     <p:column headerText="Descrição">
                         #{itemCardapio.descricao}
                     </p:column>
+                    <p:column headerText="Preço">
+                        #{itemCardapio.preco}
+                    </p:column>
                 </p:dataTable>
             </h:form>
         </p:panel>
@@ -42,6 +45,9 @@
                     <h:inputTextarea value="#{itemCardapioController.itemCardapio.descricao}"
                                      rows="5"
                                      cols="15"/>
+                    <h:outputLabel value="Valor: " />
+                    <xc:inputNumber value="#{itemCardapioController.itemCardapio.preco}"
+                                    limit="7" />
                 </h:panelGrid>
                 <p:commandButton value="Salvar"
                                  process="@form"

@@ -2,112 +2,139 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="./modelos/modelo.xhtml"
-                xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:x="http://xpert.com/faces" 
+                xmlns:x="http://xpert.com/faces"
                 xmlns:xc="http://java.sun.com/jsf/composite/xpert/components">
     <ui:define name="content">
-        <p:panel header="Pedidos">
-            <h:form prependId="false" id="formConsultaPedido">
-                <p:messages />
-                <p:commandButton value="Cadastrar" onclick="dialogCadastro.show()"/>
-                <p:dataTable
-                    value="#{pedidoController.pedidos}"
-                    var="ped"
-                    paginator="true"
-                    rows="10"
-                    paginatorPosition="bottom"
-                    emptyMessage="Nenhuma pedido encontrado.">
-                    <p:column headerText="N.º Pedido">
-                        #{ped.id}
-                    </p:column>
-                    <p:column headerText="Data Pedido">
-                        #{ped.dataPedido}
-                    </p:column>
-                    <p:column headerText="Mesa">
-                        #{ped.mesa.descricao}
-                    </p:column>
-                    <p:column headerText="Garcom">
+      <p:panel header="Pedidos dos Clientes">
+        <h:form prependId="false" id="frmPedidos">
+            <p:messages/>
+            <p:commandButton value="Cadastrar" onclick="dialogCadastro.show()"/>
+            <p:dataTable value="#{pedidoController.pedidos}" 
+                        var="ped"
+                        paginator="true"
+                        rows="20"
+                        paginatorPosition="bottom"
+                        emptyMessage="Nenhum pedido lançado">
+                <p:column headerText="Numero da Mesa">
+                    #{ped.mesa.id}                    
+                </p:column>
+                <p:column headerText="Num pedido">
+                    #{ped.id}
+                </p:column>
+                <p:column headerText="Garçom">
                         #{ped.garcom.nome}
-                    </p:column>
-                    <p:column headerText="Ações">
-                        <p:commandButton value="Item do Pedido" oncomplete="dialogItemCardapio.show()" 
-                                         update=":formCadastroItemCardapio"
-                                         action="#{itemPedidoController.carregarItemCardapio()}" >
-                            <f:setPropertyActionListener 
-                                target="#{itemPedidoController.itemPedido}"
-                                value="#{item}" />
-                        </p:commandButton>
-                    </p:column>
-                </p:dataTable>
-            </h:form>
-        </p:panel>
-        <p:dialog modal="true" resizable="false"
+                </p:column>
+                <p:column headerText="Data Pedido">
+                        #{ped.dataPedido}
+                </p:column>
+                <p:column headerText="Ações">
+                    <p:commandButton value="Detalhar" oncomplete="dialogView.show()"
+                                     update=":formViewItens"
+                                     action="#{pedidoController.carregarItemPedido()}">
+                        <f:setPropertyActionListener 
+                            target="#{pedidoController.pedido}" 
+                            value="#{ped}"/>
+                    </p:commandButton>
+                    <p:commandButton value="Itens" oncomplete="dialogItens.show()"
+                                     update=":formViewItens"
+                                     action="#{pedidoController.carregarItemPedido()}">
+                        <f:setPropertyActionListener 
+                            target="#{pedidoController.pedido}" 
+                            value="#{ped}"/>
+                    </p:commandButton>
+                </p:column>
+           </p:dataTable>
+        </h:form>
+      </p:panel>
+        
+     <p:dialog modal="true" resizable="false"
                   width="400"
-                  header="Manutenção de Item do Pedido"
-                  widgetVar="dialogItemCardapio">
-            <h:form id="formCadastroItemCardapio">
-                <p:dataTable value="#{itemPedidoController.itemPedidos}" 
-                             rows="5" paginator="true"
-                             var="item">
-                    <p:column headerText="Item do Pedido">
-                        #{item.itemCardapio.prato}
-                    </p:column>
-                </p:dataTable>
-                <p:dataTable  value="#{itemCardapioController.itemCardapios}" rows="5" paginator="true"
-                              emptyMessage="Sem ItemCardapios disponíveis"
-                             var="itemDisp">
-                    <p:column headerText="ItemCardapios disponíveis">
-                        #{itemDisp.prato}
-                    </p:column>
-                    <p:column headerText="Ação">
-                        <p:commandButton value="Selecionar" 
-                                         action="#{itemPedidoController.adicionarItemCardapio(itemDisp)}" 
-                                         process="@form"
-                                         update="@form"/>
-                    </p:column>
-                </p:dataTable>
-            </h:form>
-        </p:dialog>
-        <p:dialog modal="true" resizable="false"
-                  width="400"
-                  header="Manutenção de Pedido"
+                  header="Manutenção de Pedidos"
                   widgetVar="dialogCadastro">
-            <h:form prependId="false" id="formCadatroPedido">
+         <h:form prependId="false" id="frmCadPed">
                 <p:messages/>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="Garçom: " />
-                    <h:selectOneMenu value="#{pedidoController.pedido.garcom}" 
-                                     converter="entityConverter">
-                        <f:selectItem itemLabel="Selecione um garcom"
-                                      noSelectionOption="true" />
-                        <f:selectItems value="#{garcomController.garcoms}"
-                                       var="garc" itemLabel="#{garc.nome}"
-                                       itemValue="#{garc}" />
-                    </h:selectOneMenu>
-                    <h:outputLabel value="Mesa: " />
+                    <h:outputLabel value="Mesa" />
                     <h:selectOneMenu value="#{pedidoController.pedido.mesa}" 
                                      converter="entityConverter">
-                        <f:selectItem itemLabel="Selecione uma mesa"
+                        <f:selectItem itemLabel="Selecione uma Mesa"
                                       noSelectionOption="true" />
                         <f:selectItems value="#{mesaController.mesas}"
-                                       var="mes" itemLabel="#{mes.descricao}"
-                                       itemValue="#{mes}" />
+                                       var="mesa" itemLabel="#{mesa.descricao}"
+                                       itemValue="#{mesa}" />
                     </h:selectOneMenu>
-                    <h:outputLabel value="Total: " />
-                    <p:inputText value="#{pedidoController.pedido.total}" required="true"
-                                 requiredMessage="o Valor é um campo obrigatório" />
-                    
+                    <h:outputLabel value="Garçom" />
+                    <h:selectOneMenu value="#{pedidoController.pedido.garcom}" 
+                                     converter="entityConverter">
+                        <f:selectItem itemLabel="Selecione um garçom"
+                                      noSelectionOption="true" />
+                        <f:selectItems value="#{garcomController.garcoms}"
+                                       var="gar" itemLabel="#{gar.nome}"
+                                       itemValue="#{gar}" />
+                    </h:selectOneMenu>
                     <h:outputLabel value="Data: " />
                     <p:calendar value="#{pedidoController.pedido.dataPedido}" effect="explode" required="true"
                                  requiredMessage="A data é um campo obrigatório" />
                 </h:panelGrid>
                 <p:commandButton value="Salvar"
                                  process="@form"
-                                 update="@form :formConsultaPedido"
+                                 update="@form :frmPedidos"
                                  action="#{pedidoController.salvar()}"/>
-            </h:form>
-        </p:dialog>
+         </h:form>
+     </p:dialog>
+        
+     <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Vizualizar detalhes do Pedido"
+                  widgetVar="dialogView">
+         <h:form prependId="false" id="formViewItens">
+             <p:dataTable value="#{pedidoController.pedido.itemPedidos}" 
+                        var="itped"
+                        paginator="true"
+                        rows="20"
+                        paginatorPosition="bottom"
+                        emptyMessage="Nenhum Prato do Cardapio Adicionado">
+                 <p:column headerText="Prato: ">
+                     #{itped.itemCardapio.prato}
+                 </p:column>
+                 <p:column headerText="Quantidade: ">
+                     #{itped.quantidade}
+                 </p:column>
+                 <p:column headerText="Total: ">
+                     #{itped.valorTotal}
+                 </p:column>
+             </p:dataTable>
+         </h:form>
+     </p:dialog>
+        
+     <p:dialog modal="true" resizable="false"
+                  width="400"
+                  header="Adicionar Itens do Pedido"
+                  widgetVar="dialogItens">
+           <h:form id="formCadastroItem">
+               <p:messages/>
+               <h:panelGrid columns="2">
+                   <h:outputLabel value="Mesa" />
+                   <h:selectOneMenu value="#{itemPedidoController.itemPedido.itemCardapio}" 
+                                     converter="entityConverter">
+                        <f:selectItem itemLabel="Selecione um Item do Cardapio"
+                                      noSelectionOption="true" />
+                        <f:selectItems value="#{itemCardapioController.itemCardapios}"
+                                       var="cardap" itemLabel="#{cardap.prato}"
+                                       itemValue="#{cardap}" />
+                 </h:selectOneMenu>
+                 <h:outputLabel value="Quantidade"/>
+                 <p:spinner min="0" max="99" size="8" value="#{itemPedidoController.itemPedido.quantidade}"/>
+               </h:panelGrid>
+               <p:commandButton value="Salvar"
+                                 process="@form"
+                                 update="@form :formViewItens"
+                                 action="#{itemPedidoController.salvar(pedidoController.pedido)}"/>
+           </h:form>
+       </p:dialog>
     </ui:define>
+
 </ui:composition>
